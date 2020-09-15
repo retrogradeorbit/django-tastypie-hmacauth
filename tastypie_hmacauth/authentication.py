@@ -46,7 +46,7 @@ class HMACAuthentication(Authentication):
                     not self.is_timestamp_valid(timestamp):
                         return False
 
-        except Exception, e:
+        except RuntimeError:
             return False
 
         return True
@@ -104,7 +104,7 @@ class HMACAuthentication(Authentication):
 
             if diff > self.timestamp_window:
                 raise ImmediateHttpResponse(response=HttpBadRequest('Exceeded timestamp window'))
-        except Exception, e:
+        except RuntimeError:
             raise ImmediateHttpResponse(response=HttpBadRequest('Unknown error on timestamp validation'))
 
         return True
